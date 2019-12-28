@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:switch="${meme}">
+    <h2 th:case="null">Meme not found</h2>
+    <div th:case="*" class="box">
+        <img th:src="${meme.getUrl()}">
+    </div>
+    <div class="box" id="labels">
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+    //creating labels
+    var numberOfLabels = /*[[${meme.getBoxCount()}]]*/ +0;
+    for(let i=0;numberOfLabels>i;i++){
+        var newlabel = document.createElement("Input");
+        newlabel.setAttribute("id", "input"+i);
+        newlabel.value="text";
+        document.getElementById("labels").appendChild(newlabel);
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:switch="${memeList}">
+    <h2 th:case="null">No memes :(</h2>
+    <div th:case="*">
+        <h2>Choose meme</h2>
+        <form action="/this-meme" id="memeform" method="get">
+            <select name="name" style="width: 200px">
+                <option th:each="m: ${memeList}" th:text="${m.getName()}"
+                        style="height: 100px" th:value="${m.getId()}">
+                </option>
+            </select>
+            <input type="submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>
