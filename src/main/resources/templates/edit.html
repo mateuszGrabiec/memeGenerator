@@ -36,8 +36,8 @@
     var width = window.innerWidth;
     var height = window.innerHeight;
 
-    // var height = /*[[${meme.getHeight()}]]*/ +0 ;
-    // var width = /*[[${meme.getWidth()}]]*/ + 0;
+    // var imgHeight = /*[[${meme.getHeight()}]]*/ +0 ;
+    // var imgWidth = /*[[${meme.getWidth()}]]*/ + 0;
 
     console.log(width);
     console.log(height);
@@ -62,7 +62,11 @@
             text: 'Some text here',
             x: 50,
             y: 80,
-            fontSize: 20,
+            fill: 'black',
+            stroke: 'white',
+            strokeWidth: 1.5,
+            fontStyle: 'bold',
+            fontSize: 30,
             draggable: true,
             name: 'text-area',
             width: 200
@@ -257,8 +261,8 @@
         tempNode.setAttrs({
             x: 200,
             y: 50,
-            scaleX: 0.5,
-            scaleY: 0.5
+            scaleX: 0.7,
+            scaleY: 0.7
         });
         layer.add(tempNode);
         tempNode.setZIndex(0);
@@ -281,7 +285,7 @@
         'click',
         function () {
             var dataURL = stage.toDataURL({pixelRatio: 3});
-            downloadURI(dataURL, 'meme.png');
+            downloadURI(dataURL, 'yourMeme.png');
         },
         false
     );
