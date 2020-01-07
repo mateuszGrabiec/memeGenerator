@@ -11,6 +11,7 @@ import pl.wlodarczyk.meme.Service.MemeService;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
+@RequestMapping("/")
 public class MemeController {
     private MemeService memeService;
 
@@ -19,7 +20,7 @@ public class MemeController {
         this.memeService = memeService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String index(Model model){
         model.addAttribute("memeList", memeService.getMemeUrl());
         return "index";
