@@ -1,5 +1,6 @@
 package pl.wlodarczyk.meme.Service;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.client.RestTemplate;
@@ -8,6 +9,7 @@ import pl.wlodarczyk.meme.Model.Meme;
 
 import java.util.List;
 
+@Component
 @Service
 public class MemeService {
     private List<Meme> memeList;
