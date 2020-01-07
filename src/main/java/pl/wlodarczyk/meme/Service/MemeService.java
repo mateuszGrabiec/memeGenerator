@@ -16,6 +16,7 @@ public class MemeService {
         RestTemplate restTemplate = new RestTemplate();
         Container container;
         container = restTemplate.getForObject("https://api.imgflip.com/get_memes", Container.class);
+        assert container != null;
         this.memeList = container.getData().getMemes();
     }
 
