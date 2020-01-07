@@ -30,6 +30,6 @@ public class MemeController {
     public String get(@RequestParam("name") String id, Model model) {
         model.addAttribute("meme",memeService.getMemeById(id));
         model.addAttribute("numOfBox",memeService.getMemeById(id).getBoxCount());
-        return "/edit";
+        return "edit";
     }
 }
