@@ -15,9 +15,10 @@ public class MemeService {
     public MemeService() {
         RestTemplate restTemplate = new RestTemplate();
         Container container;
-        container = restTemplate.getForObject("https://api.imgflip.com/get_memes", Container.class);
-        assert container != null;
-        this.memeList = container.getData().getMemes();
+        if(restTemplate.getForObject("https://api.imgflip.com/get_memes", Container.class)!=null){
+            container=restTemplate.getForObject("https://api.imgflip.com/get_memes", Container.class);
+            if(container!=null) this.memeList = container.getData().getMemes();
+        }
     }
 
     public List<Meme> getMemeUrl(){
