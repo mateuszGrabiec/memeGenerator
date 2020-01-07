@@ -14,14 +14,6 @@ import java.util.List;
 public class MemeService {
 
     public List<Meme> getMemeUrl() {
-//        RestTemplate restTemplate = new RestTemplate();
-//        Container container;
-//            container = restTemplate.getForObject("https://api.imgflip.com/get_memes", Container.class);
-//            if (container != null) {
-//                if (container.getData() != null)
-//                    if (container.getData().getMemes() != null) return container.getData().getMemes();
-//            }
-//        return null;
 
             RestTemplate rt = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
