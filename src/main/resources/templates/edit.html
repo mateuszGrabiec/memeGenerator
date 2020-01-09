@@ -68,7 +68,6 @@
     console.log(numOfTextbox);
 
     for (var i = 0; i < numOfTextbox; i++) {
-        var txtId = 'text-area';
         var textNode = new Konva.Text({
             text: 'Some text here',
             x: 50,
@@ -93,6 +92,7 @@
 
         var tr = new Konva.Transformer({
             node: shape,
+            name: 'tr',
             enabledAnchors: ['middle-left', 'middle-right'],
             // set minimum width of text
             boundBoxFunc: function(oldBox, newBox) {
@@ -225,8 +225,6 @@
                 textarea.style.width = newWidth + 'px';
             }
 
-            var isFinished=false;
-
             textarea.addEventListener('keydown', function(e) {
                 // hide on enter
                 // but don't hide on shift + enter
@@ -317,6 +315,14 @@
             stage.setWidth(imgWidth * 0.7);
             stage.setHeight(imgHeight * 0.7);
         }
+
+        var tr = stage.find('.tr');
+        tr.forEach(border => {
+            border.hide();
+        });
+
+        alert("ok");
+
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream){
             var link = document.createElement('a');
@@ -325,7 +331,14 @@
             link.download =name;
             link.click();
         }else {
-            var A = Date.now().toString()+".png";
+
+            var tr = stage.find('.tr');
+            tr.forEach(border => {
+                border.hide();
+            });
+
+
+            var name = Date.now().toString()+".png";
             if(imgHeight>height) {
                 stage.setWidth(imgWidth * 0.5);
                 stage.setHeight(imgHeight * 0.5);
