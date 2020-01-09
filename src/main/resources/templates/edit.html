@@ -321,12 +321,11 @@
             border.hide();
         });
 
-        alert("ok");
-
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream){
+            alert("iOS");
             var link = document.createElement('a');
-            var url= stage.toDataURL({format: 'png', multiplier: 4});
+            var url= stage.toDataURL({format: 'jpg', multiplier: 4});
             link.href=url.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
             link.download =name;
             link.click();
