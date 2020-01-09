@@ -329,8 +329,7 @@
         }
 
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream){
-            alert("iOS");
+        if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream && userAgent.indexOf("Safari") !== -1){
             clearFrames();
             var link = document.createElement('a');
             var url= stage.toDataURL({format: 'jpg', multiplier: 4});
