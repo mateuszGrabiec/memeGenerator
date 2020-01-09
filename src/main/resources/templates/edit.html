@@ -317,12 +317,28 @@
             stage.setWidth(imgWidth * 0.7);
             stage.setHeight(imgHeight * 0.7);
         }
-        // var dataURL = stage.toDataURL({pixelRatio:3});
-        // downloadURI(dataURL, A);
-        var link = document.createElement("a");
-        link.href = stage.toDataURL({format: 'png', multiplier: 4});
-        link.download =name;
-        link.click();
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream){
+            var link = document.createElement('a');
+            var url= stage.toDataURL({format: 'png', multiplier: 4});
+            link.href=url.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+            link.download =name;
+            link.click();
+        }else {
+            var A = Date.now().toString()+".png";
+            if(imgHeight>height) {
+                stage.setWidth(imgWidth * 0.5);
+                stage.setHeight(imgHeight * 0.5);
+            }else {
+                stage.setWidth(imgWidth * 0.7);
+                stage.setHeight(imgHeight * 0.7);
+            }
+            var link = document.createElement("a");
+            link.href = stage.toDataURL({format: 'png', multiplier: 4});
+            link.download =name;
+            link.click();
+            delete link;
+        }
     }
 
     document.getElementById('save').addEventListener("click",download);
