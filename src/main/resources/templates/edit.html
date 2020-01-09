@@ -308,32 +308,25 @@
 
     //save img
 
-    function downloadURI(uri, name) {
-        var link = document.createElement('a');
-        link.download = name;
-        link.href = uri;
-        document.body.appendChild(link);
+    function download() {
+        var name = Date.now().toString()+".png";
+        if(imgHeight>height) {
+            stage.setWidth(imgWidth * 0.5);
+            stage.setHeight(imgHeight * 0.5);
+        }else {
+            stage.setWidth(imgWidth * 0.7);
+            stage.setHeight(imgHeight * 0.7);
+        }
+        // var dataURL = stage.toDataURL({pixelRatio:3});
+        // downloadURI(dataURL, A);
+        var link = document.createElement("a");
+        link.href = stage.toDataURL({format: 'png', multiplier: 4});
+        link.download =name;
         link.click();
-        document.body.removeChild(link);
-        delete link;
     }
 
-    document.getElementById('save').addEventListener(
-        'click',
-        function () {
-            var A = Date.now().toString()+".png";
-            if(imgHeight>height) {
-                stage.setWidth(imgWidth * 0.5);
-                stage.setHeight(imgHeight * 0.5);
-            }else {
-                stage.setWidth(imgWidth * 0.7);
-                stage.setHeight(imgHeight * 0.7);
-            }
-            var dataURL = stage.toDataURL({pixelRatio:3});
-            downloadURI(dataURL, A);
-        },
-        false
-    );
+    document.getElementById('save').addEventListener("click",download);
+    document.getElementById('save').addEventListener("touchend",download);
 
 </script>
 </body>
