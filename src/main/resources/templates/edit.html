@@ -321,22 +321,24 @@
             border.hide();
         });
 
+        function clearFrames() {
+            var tr = stage.find('.tr');
+            tr.forEach(border => {
+                border.hide();
+            });
+        }
+
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream){
             alert("iOS");
+            clearFrames();
             var link = document.createElement('a');
             var url= stage.toDataURL({format: 'jpg', multiplier: 4});
             link.href=url.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
             link.download =name;
             link.click();
         }else {
-
-            var tr = stage.find('.tr');
-            tr.forEach(border => {
-                border.hide();
-            });
-
-
+            clearFrames();
             var name = Date.now().toString()+".png";
             if(imgHeight>height) {
                 stage.setWidth(imgWidth * 0.5);
