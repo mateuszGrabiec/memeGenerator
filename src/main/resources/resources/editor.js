@@ -42,20 +42,11 @@ function init(imgHeight, imgWidth, numOfTextbox, url) {
             //set minimum width of text
             boundBoxFunc: function (oldBox, newBox) {
                 newBox.width = Math.max(5, newBox.width);
-                // newBox.height=Math.max(5, newBox.height);
+                newBox.height=Math.max(5, newBox.height);
                 shape.font=newBox.height;
                 return newBox;
             }
         });
-
-
-        // shape.on('transform', function () {
-        //     //reset scale, so only with is changing by transformer
-        //     shape.setAttrs({
-        //         width: shape.width() * shape.scaleX(),
-        //         scaleX: 1
-        //     });
-        // });
 
         layer.add(tr);
 
