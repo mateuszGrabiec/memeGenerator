@@ -1,0 +1,34 @@
+html, body {
+    top: 0;
+    right: 0;
+    background: lightgray;
+    margin: 0;
+    padding: 0;
+}
+
+#buttons > input {
+    padding: 10px;
+    display: block;
+    margin-top: 5px;
+}
+
+.not-active {
+    cursor: default;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    cursor: default;
+    text-decoration: none;
+    color: white;
+}
+
+textarea {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+#main-container {
+    display: block;
+    margin: 0 auto;
+}

@@ -7,48 +7,17 @@
     <script src="editor.js"></script>
     <meta charset="utf-8"/>
     <title>Make meme</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #f0f0f0;
-        }
-
-        #buttons {
-            position: absolute;
-            top: 5px;
-            left: 10px;
-        }
-
-        #buttons > input {
-            padding: 10px;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .not-active {
-            cursor: default;
-            text-decoration: none;
-            color: white;
-        }
-
-        a:hover {
-            cursor: default;
-            text-decoration: none;
-            color: white;
-        }
-        textarea{
-            text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-        }
-    </style>
+    <link rel="stylesheet" media="only screen" href="style-edit.css" type="text/css">
 </head>
 
 <body>
-<button id="save" class="btn btn-danger">Save as image</button>
-<button id="gohome" class="btn btn-success"><a class="not-active" href="/">Go to list</a></button>
-<br>
-<div id="container"></div>
+<div id="main-container">
+    <button id="save" class="btn btn-danger">Save as image</button>
+    <button id="gohome" class="btn btn-success"><a class="not-active" href="/">Go to list</a></button>
+    <br>
+    <div id="container">
+    </div>
+</div>
 <script th:inline="javascript">
     var imgHeight = /*[[${meme.getHeight()}]]*/ +0;
     var imgWidth = /*[[${meme.getWidth()}]]*/ +0;

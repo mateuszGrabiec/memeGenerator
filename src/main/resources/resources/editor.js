@@ -1,7 +1,7 @@
 function init(imgHeight, imgWidth, numOfTextbox, url) {
 
-    var width = window.innerWidth;
-    var height = window.innerHeight;
+    var width = imgWidth;
+    var height =imgHeight;
 
     var stage = new Konva.Stage({
         container: 'container',
