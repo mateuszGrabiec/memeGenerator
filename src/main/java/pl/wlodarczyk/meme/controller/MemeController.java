@@ -26,6 +26,11 @@ public class MemeController {
         return "index";
     }
 
+    @GetMapping("/custom")
+    public String custom(){
+        return "custom-edit";
+    }
+
     @RequestMapping(value = "/this-meme", method = GET)
     public String get(@RequestParam("name") String id, Model model) {
         model.addAttribute("meme",memeService.getMemeById(id));

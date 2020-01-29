@@ -14,18 +14,28 @@
 <div id="main-container">
     <button id="save" class="btn btn-danger">Save as image</button>
     <button id="gohome" class="btn btn-success"><a class="not-active" href="/">Go to list</a></button>
+    <input id="load" type="file" class="btn btn-success"/>
+    <button id="add-txt" class="btn btn-success">Add text box</button>
     <br>
     <div id="container">
     </div>
 </div>
-<script th:inline="javascript">
-    var imgHeight = /*[[${meme.getHeight()}]]*/ +0;
-    var imgWidth = /*[[${meme.getWidth()}]]*/ +0;
-    //num of box from view
-    var numOfTextbox =/*[[${meme.getBoxCount()}]]*/ +0;
-    //url from wiev
-    var url =/*[[${meme.getUrl()}]]*/ +'';
-    init(imgHeight, imgWidth, numOfTextbox, url,null);
+<script >
+    document.getElementById('load').onchange= function(){
+        let img = new Image();
+        img.onload = draw;
+        img.onerror = failed;
+        img.src = URL.createObjectURL(this.files[0]);
+    };
+
+    function draw() {
+        init(this.height, this.width, 0,this.src,"add-txt");
+    }
+    function failed() {
+        console.error("The provided file couldn't be loaded as an Image media");
+    }
+
+
 </script>
 </body>
 </html>
