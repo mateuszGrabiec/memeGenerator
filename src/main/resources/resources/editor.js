@@ -1,21 +1,26 @@
-function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
+function add(stage, imgHeight, imgWidth, url) {
 
-    let isMobile=detectmob();
+    const layer = new Konva.Layer();
+    stage.add(layer);
 
-    const width = imgWidth;
-    const height =imgHeight;
-    let scale=1;
-
-    if (width > window.innerWidth) scale=(window.innerWidth/width)-0.1;
-    if(height>window.innerHeight) scale=(window.innerHeight/height)-0.025;
-
-    if(isMobile) scale=500/width;
-
-    const stage = new Konva.Stage({
-        container: 'container',
-        width: width*scale,
-        height: height*scale
+    Konva.Image.fromURL(url, function (tempNode) {
+        tempNode.setAttrs({
+            draggable: true,
+            x: 0,
+            y: 0,
+            scaleX: 1,
+            scaleY: 1
+        });
+        let tr=createTr(tempNode);
+        layer.add(tr);
+        layer.add(tempNode);
+        tempNode.setZIndex(0);
+        layer.batchDraw();
     });
+}
+
+function init(stage,scale, numOfTextbox, url,addId) {
+    let isMobile=detectmob();
 
     const img = new Image();
     img.src = url;
@@ -25,6 +30,7 @@ function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
 
     const layer = new Konva.Layer();
     stage.add(layer);
+
 
     for (var i = 0; i < numOfTextbox; i++) {
         var textNode = new Konva.Text({
@@ -50,24 +56,13 @@ function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
     function addAllTr() {
         let shapes = stage.find('.text-area');
         shapes.forEach(shape => {
-            addTr(shape);
+            makeEditable(shape);
         });
     }
 
-    function addTr(shape) {
-        let tr = new Konva.Transformer({
-            node: shape,
-            name: 'tr',
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'bottom-center', 'middle-left', 'middle-right'],
-            //set minimum width of text
-            boundBoxFunc: function (oldBox, newBox) {
-                newBox.width = Math.max(5, newBox.width);
-                newBox.height = Math.max(5, newBox.height);
-                shape.font = newBox.height;
-                return newBox;
-            }
-        });
+    function makeEditable(shape) {
 
+        let tr=createTr(shape);
         layer.add(tr);
 
 
@@ -236,7 +231,6 @@ function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
             textarea.style.height =
                 textarea.scrollHeight + shape.fontSize() + 'px';
         });
-
         function handleOutsideClick(e) {
             if (e.target !== textarea) {
                 shape.text(textarea.value);
@@ -273,6 +267,15 @@ function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
         });
     }
 
+    //show frames again
+
+    function showFrames() {
+        let tr = stage.find('.tr');
+        tr.forEach(border => {
+            border.show();
+        });
+    }
+
     //save img
 
     function download() {
@@ -293,6 +296,7 @@ function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
             link.href = stage.toDataURL({format: 'png', multiplier: 4});
             link.download = name;
             link.click();
+            showFrames();
             delete link;
         }
     }
@@ -316,14 +320,13 @@ function init(imgHeight, imgWidth, numOfTextbox, url,addId) {
 
             layer.add(textNode);
 
-            addTr(textNode);
+            makeEditable(textNode);
 
             layer.draw();
         });
     }
 
     document.getElementById('save').addEventListener("click", download);
-    // document.getElementById('save').addEventListener("touchend", download);
 
 }
 
@@ -335,4 +338,36 @@ function detectmob() {
         || navigator.userAgent.match(/iPod/i)
         || navigator.userAgent.match(/BlackBerry/i)
         || navigator.userAgent.match(/Windows Phone/i));
+}
+
+function createStage(imgWidth,imgHeight) {
+    const width = imgWidth;
+    const height =imgHeight;
+    let scale=1;
+
+    if (width > window.innerWidth) scale=(window.innerWidth/width)-0.1;
+    if(height>window.innerHeight) scale=(window.innerHeight/height)-0.025;
+
+    if(detectmob()) scale=500/width;
+
+    return new Konva.Stage({
+        container: 'container',
+        width: width * scale,
+        height: height * scale
+    });
+}
+
+function createTr(shape) {
+    return new Konva.Transformer({
+        node: shape,
+        name: 'tr',
+        enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'bottom-center', 'middle-left', 'middle-right'],
+        //set minimum width of text
+        boundBoxFunc: function (oldBox, newBox) {
+            newBox.width = Math.max(5, newBox.width);
+            newBox.height = Math.max(5, newBox.height);
+            shape.font = newBox.height;
+            return newBox;
+        }
+    });
 }

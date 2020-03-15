@@ -14,18 +14,36 @@
 <div id="main-container">
     <button id="save" class="btn btn-danger">Save as image</button>
     <button id="gohome" class="btn btn-success"><a class="not-active" href="/">Go to list</a></button>
+    <input id="load-image" type="file" class="btn btn-success"/>
+    <button id="add-txt" class="btn btn-success">Add text box</button>
     <br>
     <div id="container">
     </div>
 </div>
 <script th:inline="javascript">
-    var imgHeight = /*[[${meme.getHeight()}]]*/ +0;
-    var imgWidth = /*[[${meme.getWidth()}]]*/ +0;
+    const imgHeight = /*[[${meme.getHeight()}]]*/ +0;
+    const imgWidth = /*[[${meme.getWidth()}]]*/ +0;
     //num of box from view
-    var numOfTextbox =/*[[${meme.getBoxCount()}]]*/ +0;
+    const numOfTextbox =/*[[${meme.getBoxCount()}]]*/ +0;
     //url from wiev
-    var url =/*[[${meme.getUrl()}]]*/ +'';
-    init(imgHeight, imgWidth, numOfTextbox, url,null);
+    const url =/*[[${meme.getUrl()}]]*/ +'';
+    const stage= createStage(imgWidth,imgHeight);
+    const scale=stage.getWidth()/imgWidth;
+    init(stage, scale, numOfTextbox, url,"add-txt");
+
+    document.getElementById('load-image').onchange= function(){
+        let img = new Image();
+        img.onload = imageLoaded;
+        img.onerror = failed;
+        img.src = URL.createObjectURL(this.files[0]);
+    };
+
+    function imageLoaded() {
+        add(stage, this.height, this.width,this.src);
+    }
+    function failed() {
+        console.error("The provided file couldn't be loaded as an Image media");
+    }
 </script>
 </body>
 </html>

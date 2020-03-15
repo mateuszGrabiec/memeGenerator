@@ -14,22 +14,39 @@
 <div id="main-container">
     <button id="save" class="btn btn-danger">Save as image</button>
     <button id="gohome" class="btn btn-success"><a class="not-active" href="/">Go to list</a></button>
-    <input id="load" type="file" class="btn btn-success"/>
+    <input id="load-template" type="file" class="btn btn-success"/>
+    <input id="load-image" type="file" class="btn btn-success"/>
     <button id="add-txt" class="btn btn-success">Add text box</button>
     <br>
     <div id="container">
     </div>
 </div>
-<script >
-    document.getElementById('load').onchange= function(){
+<script>
+    let stage;
+    let scale;
+
+    document.getElementById('load-template').onchange= function(){
         let img = new Image();
         img.onload = draw;
         img.onerror = failed;
         img.src = URL.createObjectURL(this.files[0]);
     };
 
+    document.getElementById('load-image').onchange= function(){
+        let img = new Image();
+        img.onload = imageLoaded;
+        img.onerror = failed;
+        img.src = URL.createObjectURL(this.files[0]);
+    };
+
+    function imageLoaded() {
+        add(stage, this.height, this.width,this.src);
+    }
+
     function draw() {
-        init(this.height, this.width, 0,this.src,"add-txt");
+        stage=createStage(this.width,this.height);
+        scale=stage.getWidth()/this.width;
+        init(stage, scale,0,this.src,"add-txt");
     }
     function failed() {
         console.error("The provided file couldn't be loaded as an Image media");
